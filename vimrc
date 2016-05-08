@@ -1,5 +1,6 @@
 "
 " ~/.vimrc
+" Largely copied from https://github.com/nvie/vimrc
 "
 " Be iMproved
 " This must be first, because it changes other options as a side effect.
@@ -179,6 +180,11 @@ set showcmd                     " show (partial) command in the last line of the
                                 "    this also shows visual selection info
 set nomodeline                  " disable mode lines (security measure)
 set cursorline                  " underline the current line, for quick orientation
+
+" Switch from block-cursor to vertical-line-cursor when going into/out of
+" insert mode
+let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 " }}}
 
 " Toggle the quickfix window {{{
@@ -330,7 +336,96 @@ vnoremap <Space> za
 nnoremap <leader>W :%s/\s\+$//<CR>:let @/=''<CR>
 " }}}
 
-" NERDTree settings {{{
+" Filetype handling {{{
+augroup go_files "{{{
+    " https://github.com/fatih/vim-go
+
+    " Don't use default marker method
+    autocmd filetype go setlocal foldmethod=syntax
+
+    " Settings
+    let g:go_auto_type_info = 1
+
+    " Set local mappings
+    autocmd filetype go nmap <buffer> <LocalLeader>r <Plug>(go-run)
+    autocmd filetype go nmap <buffer> <LocalLeader>b <Plug>(go-build)
+    autocmd filetype go nmap <buffer> <LocalLeader>t <Plug>(go-test)
+    autocmd filetype go nmap <buffer> <LocalLeader>c <Plug>(go-coverage-toggle)
+    autocmd filetype go nmap <buffer> <LocalLeader>a <Plug>(go-alternate-edit)
+
+    " Mappings for definitions and declarations. By default, gd is mapped to
+    " open the target identifier in current buffer.
+    autocmd FileType go nmap <LocalLeader>ds <Plug>(go-def-split)
+    autocmd FileType go nmap <LocalLeader>dv <Plug>(go-def-vertical)
+    autocmd FileType go nmap <LocalLeader>dt <Plug>(go-def-tab)
+
+    " Open the revelevant documentation for the word under the cursor.
+    " The default K (keywordprog) shortcut will godoc the word under the
+    " cursor.
+    autocmd FileType go nmap <LocalLeader>gd <Plug>(go-doc)
+    autocmd FileType go nmap <LocalLeader>gv <Plug>(go-doc-vertical)
+    autocmd FileType go nmap <LocalLeader>gb <Plug>(go-doc-browser)
+
+    " Show information for the word under the cursor.
+    autocmd FileType go nmap <LocalLeader>s <Plug>(go-implements)
+    autocmd FileType go nmap <LocalLeader>i <Plug>(go-info)
+
+    " Rename the identifier under the cursor.
+    autocmd FileType go nmap <LocalLeader>e <Plug>(go-rename)
+augroup end "}}}
+augroup invisible_chars "{{{
+    autocmd!
+
+    " Show invisible characters in all of these files
+    autocmd filetype vim setlocal list
+    autocmd filetype python,rst setlocal list
+    autocmd filetype ruby setlocal list
+    autocmd filetype javascript,css setlocal list
+augroup end "}}}
+" }}}
+
+" Airline config {{{
+" https://github.com/vim-airline/vim-airline
+" https://github.com/vim-airline/vim-airline-themes
+
+let g:airline_powerline_fonts = 1
+
+" }}}
+" Neocomplete config {{{
+" https://github.com/Shougo/neocomplete.vim
+" Disable AutoComplPop.
+let g:acp_enableAtStartup = 0
+" Use neocomplete.
+let g:neocomplete#enable_at_startup = 1
+
+" Use smartcase.
+let g:neocomplete#enable_smart_case = 1
+" Set minimum syntax keyword length.
+let g:neocomplete#sources#syntax#min_keyword_length = 3
+let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
+
+" Plugin key-mappings.
+inoremap <expr><C-g>     neocomplete#undo_completion()
+inoremap <expr><C-l>     neocomplete#complete_common_string()
+
+" Recommended key-mappings.
+" <CR>: close popup and save indent.
+inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+function! s:my_cr_function()
+  return (pumvisible() ? "\<C-y>" : "" ) . "\<CR>"
+  " For no inserting <CR> key.
+  "return pumvisible() ? "\<C-y>" : "\<CR>"
+endfunction
+" <TAB>: completion.
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+" <C-h>, <BS>: close popup and delete backword char.
+inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
+inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+" Close popup by <Space>.
+"inoremap <expr><Space> pumvisible() ? "\<C-y>" : "\<Space>"
+" }}}
+" NERDTree config {{{
+" https://github.com/scrooloose/nerdtree
 nnoremap <leader>n :NERDTreeFocus<CR>
 nnoremap <leader>m :NERDTreeClose<CR>:NERDTreeFind<CR>
 nnoremap <leader>N :NERDTreeClose<CR>
@@ -359,6 +454,39 @@ let NERDTreeMouseMode=2
 let NERDTreeIgnore=[ '\.pyc$', '\.pyo$', '\.py\$class$', '\.obj$',
             \ '\.o$', '\.so$', '\.egg$', '^\.git$', '__pycache__', '\.DS_Store' ]
 
+" }}}
+" Syntastic config {{{
+" https://github.com/scrooloose/syntastic
+
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
+let g:syntastic_html_checkers = []
+let g:syntastic_javascript_checkers = ['eslint']
+
+let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
+let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
+let g:go_list_type = "quickfix"
+
+" }}}
+" vim-go config {{{
+" By default syntax-highlighting for Functions, Methods and Structs is
+" disabled
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_structs = 1
+let g:go_highlight_interfaces = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_build_constraints = 1
+
+" Enable goimports to automatically insert import paths instead of gofmt
+let g:go_fmt_command = "goimports"
 " }}}
 
 " Pulse {{{
@@ -399,61 +527,4 @@ function! PulseCursorLine()
     execute current_window . 'wincmd w'
 endfunction
 
-" }}}
-
-" Airline configuration {{{
-
-let g:airline_powerline_fonts = 1
-
-" }}}
-
-" Syntastic config {{{
-
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 0
-let g:syntastic_check_on_wq = 0
-
-let g:syntastic_html_checkers = []
-let g:syntastic_javascript_checkers = ['jshint']   " TODO: disable 'jscs' for now, until it's sane again
-
-let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
-let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
-let g:go_list_type = "quickfix"
-
-" }}}
-
-" Filetype handling {{{
-augroup invisible_chars "{{{
-    au!
-
-    " Show invisible characters in all of these files
-    autocmd filetype vim setlocal list
-    autocmd filetype python,rst setlocal list
-    autocmd filetype ruby setlocal list
-    autocmd filetype javascript,css setlocal list
-augroup end "}}}
-
-augroup go_files "{{{
-    " Don't use default marker method
-    autocmd filetype go setlocal foldmethod=syntax
-augroup end "}}}
-" }}}
-
-" vim-go config {{{
-" By default syntax-highlighting for Functions, Methods and Structs is
-" disabled
-let g:go_highlight_functions = 1
-let g:go_highlight_methods = 1
-let g:go_highlight_structs = 1
-let g:go_highlight_interfaces = 1
-let g:go_highlight_operators = 1
-let g:go_highlight_build_constraints = 1
-
-" Enable goimports to automatically insert import paths instead of gofmt
-let g:go_fmt_command = "goimports"
 " }}}
