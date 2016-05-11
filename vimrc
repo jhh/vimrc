@@ -339,7 +339,7 @@ augroup go_files "{{{
     " https://github.com/fatih/vim-go
 
     " Don't use default marker method
-    autocmd filetype go setlocal foldmethod=syntax
+    " autocmd filetype go setlocal foldmethod=syntax
 
     " Settings
     let g:go_auto_type_info = 1
