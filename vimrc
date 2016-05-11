@@ -487,7 +487,14 @@ let g:go_highlight_build_constraints = 1
 let g:go_fmt_command = "goimports"
 " }}}
 " Dash config {{{
-    nmap <silent> <leader>d <Plug>DashSearch 
+nmap <silent> <leader>d <Plug>DashSearch
+let g:dash_activate = 0
+" }}}
+" UltiSnips config {{{
+let g:UltiSnipsExpandTrigger = "<tab>"
+let g:UltiSnipsListSnippets = "<s-tab>"
+let g:UltiSnipsJumpForwardTrigger = "<tab>"
+let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 " }}}
 
 " Pulse {{{
