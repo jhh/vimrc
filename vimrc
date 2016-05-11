@@ -21,7 +21,6 @@ Plugin 'vim-airline/vim-airline-themes'
 Plugin 'rizzatti/dash.vim'
 Plugin 'SirVer/ultisnips'
 Plugin 'ctrlpvim/ctrlp.vim'
-Plugin 'altercation/vim-colors-solarized'
 Plugin 'Shougo/neocomplete.vim'
 Plugin 'vim-scripts/bufexplorer.zip'
 Plugin 'tpope/vim-commentary'
@@ -29,6 +28,10 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'scrooloose/syntastic'
 Plugin 'suan/vim-instant-markdown'
+
+" color schemes
+Plugin 'altercation/vim-colors-solarized'
+Plugin 'joshdick/onedark.vim'
 
 " modes
 Plugin 'fatih/vim-go'
@@ -225,7 +228,8 @@ endfunction
 if &t_Co > 2 || has("gui_running")
     syntax on                    " switch syntax highlighting on, when the terminal has colors
 endif
-colorscheme solarized
+" colorscheme solarized
+colorscheme onedark
 " }}}
 
 " Shortcut mappings {{{
