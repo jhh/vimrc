@@ -232,8 +232,8 @@ colorscheme solarized
 " Since I never use the ; key anyway, this is a real optimization for almost
 " all Vim commands, as I don't have to press the Shift key to form chords to
 " enter ex mode.
-nnoremap ; :
-nnoremap <leader>; ;
+" nnoremap ; :
+" nnoremap <leader>; ;
 
 nnoremap <leader>Q :q<CR>    " Quickly close the current window
 nnoremap <leader>q :bd<CR>   " Quickly close the current buffer
