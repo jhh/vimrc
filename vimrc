@@ -17,7 +17,6 @@ Plugin 'VundleVim/Vundle.vim'
 
 Plugin 'scrooloose/nerdtree'
 Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
 Plugin 'rizzatti/dash.vim'
 Plugin 'SirVer/ultisnips'
 Plugin 'ctrlpvim/ctrlp.vim'
@@ -32,6 +31,7 @@ Plugin 'suan/vim-instant-markdown'
 " color schemes
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'joshdick/onedark.vim'
+Plugin 'joshdick/airline-onedark.vim'
 
 " modes
 Plugin 'fatih/vim-go'
@@ -229,6 +229,7 @@ if &t_Co > 2 || has("gui_running")
     syntax on                    " switch syntax highlighting on, when the terminal has colors
 endif
 " colorscheme solarized
+let g:onedark_terminal_italics=1
 colorscheme onedark
 " }}}
 
@@ -387,6 +388,7 @@ augroup end "}}}
 " https://github.com/vim-airline/vim-airline-themes
 
 let g:airline_powerline_fonts = 1
+let g:airline_theme='onedark'
 
 " }}}
 " Neocomplete config {{{
