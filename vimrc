@@ -462,7 +462,23 @@ let g:go_highlight_build_constraints = 1
 let g:go_fmt_command = "goimports"
 
 " Auto :GoMetaLinter on save
-let g:go_metalinter_autosave = 0
+let g:go_metalinter_autosave = 1
+let g:go_metalinter_autosave_enabled = [
+        \ 'vet', 'vetshadow', 'golint',
+        \ 'ineffassign', 'goconst'
+        \ ]
+
+" GoMetaLinter currently enabled linters
+let g:go_metalinter_deadline = "60s"
+let g:go_metalinter_enabled = [
+        \ 'varcheck', 'staticcheck', 'aligncheck',
+        \ 'interfacer', 'testify',
+        \ 'gosimple', 'goconst', 'gotype',
+        \ 'structcheck', 'ineffassign', 'vetshadow',
+        \ 'dupl', 'errcheck', 'gocycle',
+        \ 'golint', 'vet',
+        \ 'unconvert', 'deadcode'
+        \ ]
 
 " Show type info in status line
 let g:go_auto_type_info = 1
