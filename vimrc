@@ -18,7 +18,6 @@ Plugin 'VundleVim/Vundle.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'vim-airline/vim-airline'
 Plugin 'rizzatti/dash.vim'
-Plugin 'SirVer/ultisnips'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'vim-scripts/bufexplorer.zip'
 Plugin 'tpope/vim-commentary'
@@ -27,9 +26,10 @@ Plugin 'terryma/vim-multiple-cursors'
 Plugin 'scrooloose/syntastic'
 Plugin 'suan/vim-instant-markdown'
 
-" Autocompletion
-Plugin 'Shougo/deoplete.nvim'
-Plugin 'zchee/deoplete-go'
+" Autocompletion and Snippets
+Plugin 'ervandew/supertab'
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'SirVer/ultisnips'
 
 " color schemes
 Plugin 'altercation/vim-colors-solarized'
@@ -396,42 +396,6 @@ let g:airline_powerline_fonts = 1
 let g:airline_theme='onedark'
 
 " }}}
-" Deoplete config {{{
-let g:deoplete#enable_at_startup = 1
-"  }}}
-" Neocomplete config {{{
-" https://github.com/Shougo/neocomplete.vim
-" Disable AutoComplPop.
-let g:acp_enableAtStartup = 0
-" Use neocomplete.
-" let g:neocomplete#enable_at_startup = 1
-
-" Use smartcase.
-" let g:neocomplete#enable_smart_case = 1
-" Set minimum syntax keyword length.
-" let g:neocomplete#sources#syntax#min_keyword_length = 3
-" let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
-
-" Plugin key-mappings.
-" inoremap <expr><C-g>     neocomplete#undo_completion()
-" inoremap <expr><C-l>     neocomplete#complete_common_string()
-
-" Recommended key-mappings.
-" <CR>: close popup and save indent.
-" inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-" function! s:my_cr_function()
-  " return (pumvisible() ? "\<C-y>" : "" ) . "\<CR>"
-  " For no inserting <CR> key.
-  "return pumvisible() ? "\<C-y>" : "\<CR>"
-" endfunction
-" <TAB>: completion.
-" inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-" <C-h>, <BS>: close popup and delete backword char.
-" inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
-" inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
-" Close popup by <Space>.
-"inoremap <expr><Space> pumvisible() ? "\<C-y>" : "\<Space>"
-" }}}
 " NERDTree config {{{
 " https://github.com/scrooloose/nerdtree
 nnoremap <leader>n :NERDTreeFocus<CR>
@@ -507,10 +471,16 @@ nmap <silent> <leader>d <Plug>DashSearch
 let g:dash_activate = 0
 " }}}
 " UltiSnips config {{{
+" http://chauncey.io/ultisnips-youcompleteme-now-if-i-can-just-get-you-two-to-cooperate/
 let g:UltiSnipsExpandTrigger = "<tab>"
-let g:UltiSnipsListSnippets = "<s-tab>"
 let g:UltiSnipsJumpForwardTrigger = "<tab>"
 let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
+" }}}
+" YouCompleteMe {{{
+" make YCM compatible with UltiSnips (using supertab)
+let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
+let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
+let g:SuperTabDefaultCompletionType = '<C-n>'
 " }}}
 " Silver Searcher config {{{
 " Use The Silver Searcher over grep, iff possible
