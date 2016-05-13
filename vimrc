@@ -349,6 +349,7 @@ augroup go_files "{{{
 
     " A tab is 8 spaces
     autocmd filetype go set tabstop=8
+    autocmd filetype go set shiftwidth=8
 
     " Set local mappings
     autocmd filetype go nmap <buffer> <LocalLeader>r <Plug>(go-run)
