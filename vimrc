@@ -324,8 +324,8 @@ cnoremap w!! w !sudo tee % >/dev/null
 " nnoremap <C-w> :redraw!<cr>
 
 " Jump to matching pairs easily, with Tab
-nnoremap <Tab> %
-vnoremap <Tab> %
+" nnoremap <Tab> %
+" vnoremap <Tab> %
 
 " Folding
 nnoremap <Space> za
@@ -343,7 +343,9 @@ augroup go_files "{{{
     " autocmd filetype go setlocal foldmethod=syntax
 
     " Settings
-    let g:go_auto_type_info = 1
+
+    " A tab is 8 spaces
+    autocmd filetype go set tabstop=8
 
     " Set local mappings
     autocmd filetype go nmap <buffer> <LocalLeader>r <Plug>(go-run)
@@ -487,6 +489,12 @@ let g:go_highlight_build_constraints = 1
 
 " Enable goimports to automatically insert import paths instead of gofmt
 let g:go_fmt_command = "goimports"
+
+" Auto :GoMetaLinter on save
+let g:go_metalinter_autosave = 0
+
+" Show type info in status line
+let g:go_auto_type_info = 1
 " }}}
 " Dash config {{{
 nmap <silent> <leader>d <Plug>DashSearch
