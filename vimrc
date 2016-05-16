@@ -49,7 +49,7 @@ filetype plugin indent on    " required, enable detection, plugins and indenting
 set shell=bash                  " Vim expects a POSIX-compliant shell, which Fish is not
 
 " Change the mapleader from \ to ,
-let mapleader=","
+let mapleader="\<space>"
 let maplocalleader="\\"
 " }}}
 
@@ -329,8 +329,8 @@ cnoremap w!! w !sudo tee % >/dev/null
 " vnoremap <Tab> %
 
 " Folding
-nnoremap <Space> za
-vnoremap <Space> za
+" nnoremap <Space> za
+" vnoremap <Space> za
 
 " Strip all trailing whitespace from a file, using ,W
 nnoremap <leader>W :%s/\s\+$//<CR>:let @/=''<CR>
