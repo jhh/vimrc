@@ -18,7 +18,6 @@ Plugin 'VundleVim/Vundle.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'vim-airline/vim-airline'
 Plugin 'rizzatti/dash.vim'
-Plugin 'SirVer/ultisnips'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'vim-scripts/bufexplorer.zip'
 Plugin 'tpope/vim-commentary'
@@ -27,9 +26,8 @@ Plugin 'terryma/vim-multiple-cursors'
 Plugin 'scrooloose/syntastic'
 Plugin 'suan/vim-instant-markdown'
 
-" Autocompletion
-Plugin 'Shougo/deoplete.nvim'
-Plugin 'zchee/deoplete-go'
+" Autocompletion and Snippets
+Plugin 'SirVer/ultisnips'
 
 " color schemes
 Plugin 'altercation/vim-colors-solarized'
@@ -349,10 +347,11 @@ augroup go_files "{{{
 
     " A tab is 8 spaces
     autocmd filetype go set tabstop=8
+    autocmd filetype go set shiftwidth=8
 
     " Set local mappings
     autocmd filetype go nmap <buffer> <LocalLeader>r <Plug>(go-run)
-    autocmd filetype go nmap <buffer> <LocalLeader>b <Plug>(go-build)
+    autocmd filetype go nmap <buffer> <LocalLeader>b <Plug>(go-install)
     autocmd filetype go nmap <buffer> <LocalLeader>t <Plug>(go-test)
     autocmd filetype go nmap <buffer> <LocalLeader>c <Plug>(go-coverage-toggle)
     autocmd filetype go nmap <buffer> <LocalLeader>a <Plug>(go-alternate-edit)
@@ -395,42 +394,6 @@ augroup end "}}}
 let g:airline_powerline_fonts = 1
 let g:airline_theme='onedark'
 
-" }}}
-" Deoplete config {{{
-let g:deoplete#enable_at_startup = 1
-"  }}}
-" Neocomplete config {{{
-" https://github.com/Shougo/neocomplete.vim
-" Disable AutoComplPop.
-let g:acp_enableAtStartup = 0
-" Use neocomplete.
-" let g:neocomplete#enable_at_startup = 1
-
-" Use smartcase.
-" let g:neocomplete#enable_smart_case = 1
-" Set minimum syntax keyword length.
-" let g:neocomplete#sources#syntax#min_keyword_length = 3
-" let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
-
-" Plugin key-mappings.
-" inoremap <expr><C-g>     neocomplete#undo_completion()
-" inoremap <expr><C-l>     neocomplete#complete_common_string()
-
-" Recommended key-mappings.
-" <CR>: close popup and save indent.
-" inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-" function! s:my_cr_function()
-  " return (pumvisible() ? "\<C-y>" : "" ) . "\<CR>"
-  " For no inserting <CR> key.
-  "return pumvisible() ? "\<C-y>" : "\<CR>"
-" endfunction
-" <TAB>: completion.
-" inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-" <C-h>, <BS>: close popup and delete backword char.
-" inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
-" inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
-" Close popup by <Space>.
-"inoremap <expr><Space> pumvisible() ? "\<C-y>" : "\<Space>"
 " }}}
 " NERDTree config {{{
 " https://github.com/scrooloose/nerdtree
@@ -497,7 +460,23 @@ let g:go_highlight_build_constraints = 1
 let g:go_fmt_command = "goimports"
 
 " Auto :GoMetaLinter on save
-let g:go_metalinter_autosave = 0
+let g:go_metalinter_autosave = 1
+let g:go_metalinter_autosave_enabled = [
+        \ 'vet', 'vetshadow', 'golint',
+        \ 'ineffassign', 'goconst'
+        \ ]
+
+" GoMetaLinter currently enabled linters
+let g:go_metalinter_deadline = "60s"
+let g:go_metalinter_enabled = [
+        \ 'varcheck', 'staticcheck', 'aligncheck',
+        \ 'interfacer', 'testify',
+        \ 'gosimple', 'goconst', 'gotype',
+        \ 'structcheck', 'ineffassign', 'vetshadow',
+        \ 'dupl', 'errcheck', 'gocycle',
+        \ 'golint', 'vet',
+        \ 'unconvert', 'deadcode'
+        \ ]
 
 " Show type info in status line
 let g:go_auto_type_info = 1
@@ -508,9 +487,9 @@ let g:dash_activate = 0
 " }}}
 " UltiSnips config {{{
 let g:UltiSnipsExpandTrigger = "<tab>"
-let g:UltiSnipsListSnippets = "<s-tab>"
-let g:UltiSnipsJumpForwardTrigger = "<tab>"
-let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
+let g:UltiSnipsListSnippets = "<m-tab>"
+let g:UltiSnipsJumpForwardTrigger = "<c-j>"
+let g:UltiSnipsJumpBackwardTrigger = "<c-k>"
 " }}}
 " Silver Searcher config {{{
 " Use The Silver Searcher over grep, iff possible
