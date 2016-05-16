@@ -75,6 +75,11 @@ set scrolloff=4                 " keep 4 lines off the edges of the screen when 
 " set virtualedit=all             " allow the cursor to go in to "invalid" places
 set hlsearch                    " highlight search terms
 set incsearch                   " show search matches as you type
+" Use <C-L> to clear the highlighting of :set hlsearch.
+if maparg('<C-L>', 'n') ==# ''
+  nnoremap <silent> <C-L> :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-L>
+endif
+
 set gdefault                    " search/replace "globally" (on a line) by default
 set listchars=tab:▸\ ,trail:·,extends:#,nbsp:·
 
@@ -269,11 +274,6 @@ noremap <right> <nop>
 nnoremap j gj
 nnoremap k gk
 
-" Easy window navigation
-noremap <C-h> <C-w>h
-noremap <C-j> <C-w>j
-noremap <C-k> <C-w>k
-noremap <C-l> <C-w>l
 nnoremap <leader>w <C-w>v<C-w>l
 
 " Complete whole filenames/lines with a quicker shortcut key in insert mode
