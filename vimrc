@@ -234,6 +234,9 @@ endfunction
 if &t_Co > 2 || has("gui_running")
     syntax on                    " switch syntax highlighting on, when the terminal has colors
 endif
+if has('termguicolors')
+  set termguicolors
+endif
 " colorscheme solarized
 let g:onedark_terminal_italics=1
 colorscheme onedark
@@ -480,6 +483,8 @@ let g:go_metalinter_enabled = [
 
 " Show type info in status line
 let g:go_auto_type_info = 1
+" Open test in terminal window
+let g:go_term_enabled = 1
 " }}}
 " Dash config {{{
 nmap <silent> <leader>d <Plug>DashSearch
