@@ -19,7 +19,6 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'vim-airline/vim-airline'
 Plugin 'rizzatti/dash.vim'
 Plugin 'ctrlpvim/ctrlp.vim'
-Plugin 'vim-scripts/bufexplorer.zip'
 Plugin 'tpope/vim-commentary'
 Plugin 'tpope/vim-fugitive'
 Plugin 'terryma/vim-multiple-cursors'
@@ -401,7 +400,6 @@ let g:airline_theme='onedark'
 " NERDTree config {{{
 " https://github.com/scrooloose/nerdtree
 nnoremap <leader>n :NERDTreeFocus<CR>
-nnoremap <leader>m :NERDTreeClose<CR>:NERDTreeFind<CR>
 nnoremap <leader>N :NERDTreeClose<CR>
 
 " Store the bookmarks file
@@ -496,17 +494,23 @@ let g:UltiSnipsListSnippets = "<m-tab>"
 let g:UltiSnipsJumpForwardTrigger = "<c-j>"
 let g:UltiSnipsJumpBackwardTrigger = "<c-k>"
 " }}}
-" Silver Searcher config {{{
+" CtrlP config {{{
+" <Leader>b will open in buffer mode
+nnoremap <Leader>b :CtrlPBuffer<cr>
+
+" <Leader>m will open in MRU mode
+nnoremap <Leader>m :CtrlPMRU<cr>
+
 " Use The Silver Searcher over grep, iff possible
 if executable('ag')
-   " Use ag over grep
-   set grepprg=ag\ --nogroup\ --nocolor
+    " Use ag over grep
+    set grepprg=ag\ --nogroup\ --nocolor
 
-   " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-   let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+    " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+    let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
 
-   " ag is fast enough that CtrlP doesn't need to cache
-   let g:ctrlp_use_caching = 0
+    " ag is fast enough that CtrlP doesn't need to cache
+    let g:ctrlp_use_caching = 0
 endif
 " }}}
 
