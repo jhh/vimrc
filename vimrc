@@ -37,6 +37,8 @@ Plugin 'joshdick/airline-onedark.vim'
 Plugin 'fatih/vim-go'
 Plugin 'tpope/vim-markdown'
 Plugin 'dag/vim-fish'
+Plugin 'pangloss/vim-javascript'
+Plugin 'mxw/vim-jsx'
 
 call vundle#end()
 filetype plugin indent on    " required, enable detection, plugins and indenting
@@ -440,11 +442,20 @@ let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 
 let g:syntastic_html_checkers = []
-let g:syntastic_javascript_checkers = ['eslint']
 
 let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
 let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
 let g:go_list_type = "quickfix"
+
+let g:syntastic_javascript_checkers = ['eslint']
+" Override eslint with local version where necessary.
+let local_eslint = finddir('node_modules', '.;') . '/.bin/eslint'
+if matchstr(local_eslint, "^\/\\w") == ''
+  let local_eslint = getcwd() . "/" . local_eslint
+endif
+if executable(local_eslint)
+  let g:syntastic_javascript_eslint_exec = local_eslint
+endif
 
 " }}}
 " vim-go config {{{
@@ -482,7 +493,7 @@ let g:go_metalinter_enabled = [
 " Show type info in status line
 let g:go_auto_type_info = 1
 " Open test in terminal window
-let g:go_term_enabled = 1
+let g:go_term_enabled = 0
 " }}}
 " Dash config {{{
 nmap <silent> <leader>d <Plug>DashSearch
