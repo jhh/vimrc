@@ -1,17 +1,16 @@
-" vim: set sw=4 ts=4 sts=4 et tw=78 foldmarker={,} foldlevel=0 foldmethod=marker spell:
+nnoremap <Leader>b :CtrlPBuffer<cr>
+nnoremap <Leader>m :CtrlPMRU<cr>
 
-let maplocalleader="\\"
-
-" visual theme {
+" visual theme 
     " disable indent highlighting
     let g:indent_guides_enable_on_vim_startup = 0
 	let g:onedark_terminal_italics=1
 	colorscheme ir_black
 	let g:airline_theme='dark'
 	highlight Comment cterm=italic
-" }
+" 
 
-" vim-go configuration {
+" vim-go configuration 
 	" By default syntax-highlighting for Functions, Methods and Structs is
 	" disabled
 	let g:go_highlight_functions = 1
@@ -44,24 +43,25 @@ let maplocalleader="\\"
 			\ ]
 	" Show type info in status line
 	let g:go_auto_type_info = 1
-" }
+" 
 
- " Dash config {
+ " Dash config 
     nmap <silent> <leader>d <Plug>DashSearch
     let g:dash_activate = 0
-" }
+" 
 
-augroup go_files "{
+augroup go_files 
+    autocmd!
     " https://github.com/fatih/vim-go
 
     " Don't use default marker method
-    " autocmd filetype go setlocal foldmethod=syntax
+    autocmd filetype go setlocal foldmethod=indent
 
     " Settings
 
     " A tab is 8 spaces
-    autocmd filetype go set tabstop=8
-    autocmd filetype go set shiftwidth=8
+    autocmd filetype go setlocal tabstop=8
+    autocmd filetype go setlocal shiftwidth=8
 
     " Set local mappings
     autocmd filetype go nmap <buffer> <LocalLeader>r <Plug>(go-run)
@@ -72,26 +72,26 @@ augroup go_files "{
 
     " Mappings for definitions and declarations. By default, gd is mapped to
     " open the target identifier in current buffer.
-    autocmd FileType go nmap <LocalLeader>ds <Plug>(go-def-split)
-    autocmd FileType go nmap <LocalLeader>dv <Plug>(go-def-vertical)
-    autocmd FileType go nmap <LocalLeader>dt <Plug>(go-def-tab)
+    autocmd FileType go nmap <buffer> <LocalLeader>ds <Plug>(go-def-split)
+    autocmd FileType go nmap <buffer> <LocalLeader>dv <Plug>(go-def-vertical)
+    autocmd FileType go nmap <buffer> <LocalLeader>dt <Plug>(go-def-tab)
 
     " Open the revelevant documentation for the word under the cursor.
     " The default K (keywordprog) shortcut will godoc the word under the
     " cursor.
-    autocmd FileType go nmap <LocalLeader>gd <Plug>(go-doc)
-    autocmd FileType go nmap <LocalLeader>gv <Plug>(go-doc-vertical)
-    autocmd FileType go nmap <LocalLeader>gb <Plug>(go-doc-browser)
+    autocmd FileType go nmap <buffer> <LocalLeader>gd <Plug>(go-doc)
+    autocmd FileType go nmap <buffer> <LocalLeader>gv <Plug>(go-doc-vertical)
+    autocmd FileType go nmap <buffer> <LocalLeader>gb <Plug>(go-doc-browser)
 
     " Show information for the word under the cursor.
-    autocmd FileType go nmap <LocalLeader>s <Plug>(go-implements)
-    autocmd FileType go nmap <LocalLeader>i <Plug>(go-info)
+    autocmd FileType go nmap <buffer> <LocalLeader>s <Plug>(go-implements)
+    autocmd FileType go nmap <buffer> <LocalLeader>i <Plug>(go-info)
 
     " Rename the identifier under the cursor.
-    autocmd FileType go nmap <LocalLeader>e <Plug>(go-rename)
-augroup end "}
+    autocmd FileType go nmap <buffer> <LocalLeader>e <Plug>(go-rename)
+augroup end 
 
-augroup invisible_chars "{
+augroup invisible_chars 
     autocmd!
 
     " Show invisible characters in all of these files
@@ -100,5 +100,5 @@ augroup invisible_chars "{
     autocmd filetype ruby setlocal list
     autocmd filetype javascript,css setlocal list
     autocmd filetype go setlocal nolist
-augroup end "}
+augroup end 
 
