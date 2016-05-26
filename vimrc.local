@@ -1,5 +1,6 @@
 nnoremap <Leader>b :CtrlPBuffer<cr>
 nnoremap <Leader>m :CtrlPMRU<cr>
+set title
 
 " visual theme 
     " disable indent highlighting
@@ -56,6 +57,7 @@ augroup go_files
 
     " Don't use default marker method
     autocmd filetype go setlocal foldmethod=indent
+    autocmd filetype go set foldlevel=9
 
     " Settings
 
@@ -100,5 +102,6 @@ augroup invisible_chars
     autocmd filetype ruby setlocal list
     autocmd filetype javascript,css setlocal list
     autocmd filetype go setlocal nolist
+    autocmd filetype gitcommit setlocal nolist
 augroup end 
 
